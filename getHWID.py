@@ -28,14 +28,11 @@ def get_mac_machine_id():
 def get_linux_machine_id():
     # Run dmidecode and capture the output
     output = subprocess.check_output(["dmidecode"])
-    
-    # Search for the UUID and S/N in the output
     # You can modify the parsing logic based on the output format of dmidecode
-    # Here we are searching for "UUID" and "Serial Number:"
+    # Here we are searching for "UUID":"
     uuid = output.decode().split("UUID:")[1].splitlines()[0].strip()
-    serial_number = output.decode().split("Serial Number:")[1].splitlines()[0].strip()
-    
-    return uuid, serial_number
+    print('Linux Output',output)
+    return uuid
 
 def get_windows_machine_id():
     # Get the BIOS UUID
