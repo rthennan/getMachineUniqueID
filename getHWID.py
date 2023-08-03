@@ -31,7 +31,6 @@ def get_linux_machine_id():
     # You can modify the parsing logic based on the output format of dmidecode
     # Here we are searching for "UUID":"
     uuid = output.decode().split("UUID:")[1].splitlines()[0].strip()
-    print('Linux Output',output)
     return uuid
 
 def get_windows_machine_id():
