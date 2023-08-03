@@ -1,7 +1,7 @@
 import subprocess
 
 def get_mac_disk_serial_number():
-    cmd = "/usr/sbin/diskutil info / | grep 'Serial Number (system)' | awk '{print $NF}'"
+    cmd = "/usr/sbin/diskutil info"
     result = subprocess.run(cmd, stdout=subprocess.PIPE, shell=True, check=True)
     serial_number = result.stdout.strip()
     return serial_number
