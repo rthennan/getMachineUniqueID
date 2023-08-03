@@ -1,10 +1,13 @@
-import subprocess
+import socket
 
-def get_mac_disk_serial_number():
-    cmd = "/usr/sbin/diskutil info"
-    result = subprocess.run(cmd, stdout=subprocess.PIPE, shell=True, check=True)
-    serial_number = result.stdout.strip()
-    return serial_number
+def get_host_name():
+    return socket.gethostname()
 
-mac_disk_serial_number = get_mac_disk_serial_number()
-print(f"macOS Disk Serial Number: {mac_disk_serial_number}")
+def get_computer_name():
+    return socket.getfqdn()
+
+host_name = get_host_name()
+computer_name = get_computer_name()
+
+print(f"Host Name: {host_name}")
+print(f"Computer Name: {computer_name}")
