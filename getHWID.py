@@ -60,8 +60,10 @@ else:
     serial_number = result.stdout.strip()
     print('macOS serial number1',serial_number)
     
-    system_profile_data = subprocess.Popen(
-    ['system_profiler', '-json', 'SPHardwareDataType'], stdout=subprocess.PIPE)
-    data = json.loads(system_profile_data.stdout.read())
-    serial = data.get('SPHardwareDataType', {})[0].get('serial_number')
-    print('macOS serial number2',serial)
+# =============================================================================
+#     system_profile_data = subprocess.Popen(
+#     ['system_profiler', '-json', 'SPHardwareDataType'], stdout=subprocess.PIPE)
+#     data = json.loads(system_profile_data.stdout.read())
+#     serial = data.get('SPHardwareDataType', {})[0].get('serial_number')
+#     print('macOS serial number2',serial)
+# =============================================================================
