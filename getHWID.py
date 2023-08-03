@@ -49,9 +49,8 @@ if osName=='Windows':
     print(f"Windows BIOS UUID: {bios_uuid}")
     print(f"Windows System Drive Serial Number: {disk_serial_number}")
 elif osName== 'Linux':
-    linux_uuid, linux_serial_number = get_linux_machine_id()
+    linux_uuid = get_linux_machine_id()
     print(f"Linux UUID: {linux_uuid}")
-    print(f"Linux Serial Number: {linux_serial_number}")
 else:
     mac_uuid, mac_serial_number = get_mac_machine_id()
     print(f"macOS Hardware UUID: {mac_uuid}")
