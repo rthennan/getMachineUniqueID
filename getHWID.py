@@ -54,16 +54,9 @@ if osName=='Windows':
 elif osName== 'Linux':
     linux_uuid = get_linux_machine_id()
     print(f"Linux UUID: {linux_uuid}")
-else:
-    cmd = "/usr/sbin/system_profiler -xml SPHardwareDataType | awk '/Serial Number/ {print $4}' 2>/dev/null"
-    result = subprocess.run(cmd, stdout=subprocess.PIPE, shell=True, check=True)
-    serial_number = result.stdout.strip()
-    print('macOS serial number:', serial_number)
-    
-# =============================================================================
-#     system_profile_data = subprocess.Popen(
-#     ['system_profiler', '-json', 'SPHardwareDataType'], stdout=subprocess.PIPE)
-#     data = json.loads(system_profile_data.stdout.read())
-#     serial = data.get('SPHardwareDataType', {})[0].get('serial_number')
-#     print('macOS serial number2',serial)
-# =============================================================================
+else:        
+    system_profile_data = subprocess.Popen(
+    ['system_profiler', '-json', 'SPHardwareDataType'], stdout=subprocess.PIPE)
+    data = json.loads(system_profile_data.stdout.read())
+    serial = data.get('SPHardwareDataType', {})[0].get('serial_number')
+    print('macOS serial number2',serial)
