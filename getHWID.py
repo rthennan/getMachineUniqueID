@@ -16,6 +16,7 @@ osName = platform.system()
 def get_mac_machine_id():
     # Run system_profiler and capture the output
     output = subprocess.check_output(["system_profiler"])
+    print('macOS output', output.decode())
     
     # Search for the UUID and S/N in the output
     # You can modify the parsing logic based on your macOS version and desired info
@@ -23,7 +24,7 @@ def get_mac_machine_id():
     uuid = output.decode().split("Hardware UUID:")[1].splitlines()[0].strip()
     serial_number = output.decode().split("Serial Number (system):")[1].splitlines()[0].strip()
     
-    return uuid, serial_number
+    #return uuid, serial_number
 
 def get_linux_machine_id():
     # Run dmidecode and capture the output
@@ -51,6 +52,7 @@ elif osName== 'Linux':
     linux_uuid = get_linux_machine_id()
     print(f"Linux UUID: {linux_uuid}")
 else:
-    mac_uuid, mac_serial_number = get_mac_machine_id()
-    print(f"macOS Hardware UUID: {mac_uuid}")
-    print(f"macOS Serial Number: {mac_serial_number}")
+    #mac_uuid, mac_serial_number = get_mac_machine_id()
+    get_mac_machine_id()
+    #print(f"macOS Hardware UUID: {mac_uuid}")
+    #print(f"macOS Serial Number: {mac_serial_number}")
