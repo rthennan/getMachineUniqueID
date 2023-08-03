@@ -16,10 +16,17 @@ def get_disk_serial_number():
         root_device = next(line.split()[0] for line in f if line.startswith('/dev/'))
     with open('/sys/block/{}/serial'.format(root_device.split('/')[-1]), 'r') as f:
         return f.read().strip()
+    
+def get_linux_hardware_uuid():
+    try:
+        output = subprocess.check_output(["dmidecode", "-s", "system-uuid"], text=True)
+        return output.strip()
+    except subprocess.CalledProcessError:
+        return None    
 
 if osName=='Darwin':
     mac_hardware_uuid = get_mac_hardware_uuid()
     print(f"macOS Hardware UUID: {mac_hardware_uuid}")
 elif osName == 'Linux':
-    disk_serial_number = get_disk_serial_number()
-    print(f"Disk Serial Number: {disk_serial_number}")
+    linux_hardware_uuid = get_linux_hardware_uuid()
+    print(f"Linux Hardware UUID: {linux_hardware_uuid}")
