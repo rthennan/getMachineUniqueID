@@ -44,6 +44,22 @@ def get_windows_machine_id():
     
     return bios_uuid, disk_serial_number
 
+def get_mac_hardware_info():
+    # Run system_profiler and capture the output
+    output = subprocess.check_output(["system_profiler", "-detailLevel", "mini"])
+    output_lines = output.decode().splitlines()
+    
+    # Search for the UUID and S/N in the output
+    uuid = None
+    serial_number = None
+    for line in output_lines:
+        if line.strip().startswith("Hardware UUID:"):
+            uuid = line.strip().split(":")[1].strip()
+        elif line.strip().startswith("Serial Number (system):"):
+            serial_number = line.strip().split(":")[1].strip()
+    
+    return uuid, serial_number
+
 if osName=='Windows':
     bios_uuid, disk_serial_number = get_windows_machine_id()
     print(f"Windows BIOS UUID: {bios_uuid}")
@@ -53,6 +69,8 @@ elif osName== 'Linux':
     print(f"Linux UUID: {linux_uuid}")
 else:
     #mac_uuid, mac_serial_number = get_mac_machine_id()
-    get_mac_machine_id()
     #print(f"macOS Hardware UUID: {mac_uuid}")
     #print(f"macOS Serial Number: {mac_serial_number}")
+    mac_uuid, mac_serial_number = get_mac_hardware_info()
+    print(f"macOS Hardware UUID: {mac_uuid}")
+    print(f"macOS Serial Number: {mac_serial_number}")
