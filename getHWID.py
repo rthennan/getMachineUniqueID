@@ -9,6 +9,7 @@ import psutil
 import platform 
 import subprocess
 import plistlib
+import json
 
 print(f'OS Platform ==> {platform.system()}')
 
@@ -54,13 +55,13 @@ elif osName== 'Linux':
     linux_uuid = get_linux_machine_id()
     print(f"Linux UUID: {linux_uuid}")
 else:
-    def get_mac_hardware_info():
-        output = subprocess.check_output(["ioreg", "-l", "-rd1", "-c", "IOPlatformExpertDevice"])
-        plist_data = plistlib.loads(output)
-        uuid = plist_data[0]["IOPlatformUUID"]
-        serial_number = plist_data[0]["IOPlatformSerialNumber"]
-        return uuid, serial_number
+    cmd = "system_profiler SPHardwareDataType | awk '/Serial Number/ {print $4}'"
+    result = subprocess.run(cmd, stdout=subprocess.PIPE, shell=True, check=True)
+    serial_number = result.stdout.strip()
+    print('macOS serial number1',serial_number)
     
-    mac_uuid, mac_serial_number = get_mac_hardware_info()
-    print(f"macOS Hardware UUID: {mac_uuid}")
-    print(f"macOS Serial Number: {mac_serial_number}")
+    system_profile_data = subprocess.Popen(
+    ['system_profiler', '-json', 'SPHardwareDataType'], stdout=subprocess.PIPE)
+    data = json.loads(system_profile_data.stdout.read())
+    serial = data.get('SPHardwareDataType', {})[0].get('serial_number')
+    print('macOS serial number2',serial)
