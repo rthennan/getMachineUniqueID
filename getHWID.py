@@ -14,7 +14,6 @@ def get_mac_hardware_uuid():
 def get_disk_serial_number():
     with open('/proc/self/mounts', 'r') as f:
         root_device = next(line.split()[0] for line in f if line.startswith('/dev/'))
-
     with open('/sys/block/{}/serial'.format(root_device.split('/')[-1]), 'r') as f:
         return f.read().strip()
 
