@@ -46,6 +46,8 @@ def get_windows_machine_id():
     
     return bios_uuid, disk_serial_number
 
+def get_id():
+    return subprocess.Popen('hal-get-property --udi /org/freedesktop/Hal/devices/computer --key system.hardware.uuid'.split())
 
 if osName=='Windows':
     bios_uuid, disk_serial_number = get_windows_machine_id()
@@ -55,8 +57,5 @@ elif osName== 'Linux':
     linux_uuid = get_linux_machine_id()
     print(f"Linux UUID: {linux_uuid}")
 else:        
-    system_profile_data = subprocess.Popen(
-    ['system_profiler', '-json', 'SPHardwareDataType'], stdout=subprocess.PIPE)
-    data = json.loads(system_profile_data.stdout.read())
-    serial = data.get('SPHardwareDataType', {})[0].get('serial_number')
+    serial = get_id()
     print('macOS serial number2',serial)
